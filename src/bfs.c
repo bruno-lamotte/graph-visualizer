@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   bfs.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blamotte <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 07:53:04 by blamotte          #+#    #+#             */
-/*   Updated: 2026/01/08 08:58:45 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/01/09 23:00:45 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	is_exit(t_state *current)
-{
-	return (current->block_data[0] == EXIT);
-}
+#include <graph.h>
 
 int	add_to__queue(t_queue q, t_state futur)
 {
@@ -41,8 +38,6 @@ void	add_adjacency(t_state *actual, t_state *futur)
 {
 	actual->adjacency->next = actual->adjacency;
 	actual->adjacency = futur;
-	futur->adjacency->next = futur->adjacency;
-	futur->adjacency = acutal;
 }
 
 int	bfs(t_queue **q, t_bst **tree)
@@ -54,14 +49,15 @@ int	bfs(t_queue **q, t_bst **tree)
 	while (q->front)
 	{
 		actual = get_from_queue(q);
-		if (is_exit(actual))
+		if (exit_or_action(actual))
 			return (1);
 		i = 1;
-		while (i >= NB_POSSIBLE_MOVES)
+		while (i <= NB_POSSIBLE_MOVES)
 		{
-			futur = mouv(actual, i);
+			futur = move(actual, i);
 			if (futur)
 			{
+				add_adjacency(actual, futur);
 				if (!bst_search(tree, futur))
 				{
 					bst_insert(tree, futur);
@@ -69,10 +65,7 @@ int	bfs(t_queue **q, t_bst **tree)
 						return (-1);
 				}
 				else
-				{
-					add_adjacency(actual, futur);
 					free_state(futur);
-				}
 			}
 			i++;
 		}

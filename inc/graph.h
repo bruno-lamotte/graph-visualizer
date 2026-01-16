@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graph.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blamotte <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/08 04:05:37 by blamotte          #+#    #+#             */
-/*   Updated: 2026/01/08 08:59:06 by blamotte         ###   ########.fr       */
+/*   Created: 2026/01/09 20:52:29 by blamotte          #+#    #+#             */
+/*   Updated: 2026/01/09 23:09:27 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,46 +14,21 @@
 # define GRAPH
 
 # include <libft.h>
+# include <struct.h>
 
-# ifndef START
-#  define START 0
-# endif
+/* action.c */
+int		is_exit(t_state *current);
+int		exit_or_action(t_state *current);
 
-# ifndef EXIT
-#  define EXIT 2
-# endif
+/* bfs.c */
+int		add_to__queue(t_queue q, t_state futur);
+t_state	get_from_queue(t_queue q);
+void	add_adjacency(t_state *actual, t_state *futur);
+int		bfs(t_queue **q, t_bst **tree);
+
+/* bst.c */
+int		compare_states(t_state *a, t_state *b);
+int		bst_search(t_bst **tree, t_state *futur);
+void	bst_insert(t_bst **tree, t_state *new);
 
 
-typedef struct s_list
-{
-	void			*content;
-	struct s_list	*next;
-}					t_list;
-
-typedef struct	s_state
-{
-	int				x;
-	int				y;
-	unsigned char	block_data;
-	struct	s_state	*parent;
-	t_list			*adjacency;
-}					t_state;
-
-typedef struct	s_bst
-{
-	t_state			*state;
-	struct	s_bst	*left;
-	struct	s_bst	*right;
-}					t_bst;
-
-typedef struct      s_qnode
-{
-    t_state         *state;
-    struct s_qnode  *next;
-}                   t_qnode;
-
-typedef struct      s_queue
-{
-    t_qnode         *front;
-    t_qnode         *rear;
-}                   t_queue;

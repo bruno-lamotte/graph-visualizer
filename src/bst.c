@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bst.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blamotte <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 06:43:46 by blamotte          #+#    #+#             */
-/*   Updated: 2026/01/08 07:52:30 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/01/09 23:02:58 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int compare_states(t_state *a, t_state *b)
 		return (a->x - b->x);
     if (a->y != b->y)
 		return (a->y - b->y);
-    return (ft_memcmp(a->block_data, b->block_data, DATA_SIZE)
+    return (ft_memcmp(a->block_data, b->block_data, a->data_size));
 }
 
 int	bst_search(t_bst **tree, t_state *futur)
