@@ -6,7 +6,7 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 23:08:29 by blamotte          #+#    #+#             */
-/*   Updated: 2026/01/09 23:13:05 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/01/20 07:35:40 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,19 @@
 #define GLOBAL_VARIABLES
 
 /*statut changes*/
-# ifndef START
-#  define START 0
+# ifndef INITIAL_CHAR
+#  define INITIAL_CHAR 'P'
 # endif
 
-# ifndef EXIT
-#  define EXIT 1
+# ifndef EXIT_CHAR
+#  define EXIT_CHAR 'E'
 # endif
 
 /*moves*/
+
+# ifndef NB_POSSIBLE_MOVES
+#  define NB_POSSIBLE_MOVES 4
+# endif
 
 # ifndef UP
 #  define UP 1
@@ -39,3 +43,5 @@
 # ifndef LEFT
 #  define LEFT 4
 # endif
+
+#endif

@@ -6,7 +6,7 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 04:05:37 by blamotte          #+#    #+#             */
-/*   Updated: 2026/01/10 00:29:53 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/01/20 07:06:08 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,18 @@
 
 # include <libft.h>
 
+typedef struct	s_map_content
+{
+	char	*map;
+	int		width;
+	size_t	data_size;
+	int		initial_position;
+	int		exit_position;
+}			t_map_content;
+
 typedef struct	s_state
 {
+	int				state_index;
 	int				x;
 	int				y;
 	size_t			data_size;

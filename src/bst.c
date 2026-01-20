@@ -6,11 +6,11 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 06:43:46 by blamotte          #+#    #+#             */
-/*   Updated: 2026/01/09 23:02:58 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/01/20 07:47:17 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
+#include <graph.h>
 
 
 int compare_states(t_state *a, t_state *b)
@@ -22,13 +22,13 @@ int compare_states(t_state *a, t_state *b)
     return (ft_memcmp(a->block_data, b->block_data, a->data_size));
 }
 
-int	bst_search(t_bst **tree, t_state *futur)
+int	bst_search(t_bst *tree, t_state *futur)
 {
 	int	direction;
 
 	while (tree)
 	{
-		direction = compare_state((tree->state), futur);
+		direction = compare_states((tree->state), futur);
 		if (!direction)
 			return (1);
 		if (direction > 0)
@@ -39,14 +39,15 @@ int	bst_search(t_bst **tree, t_state *futur)
 	return (0);
 }
 
-void	bst_insert(t_bst **tree, t_state *new)
+void	bst_insert(t_bst *tree, t_state *new)
 {
-	t_bst *temp;
+	t_bst	*temp;
+	int		direction;
 
-	temp = *tree;
+	temp = tree;
 	while (tree)
 	{
-		direction = compare_state((tree->state), new);
+		direction = compare_states((tree->state), new);
 		if (direction > 0)
 			tree = tree->left;
 		else

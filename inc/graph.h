@@ -6,29 +6,46 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 20:52:29 by blamotte          #+#    #+#             */
-/*   Updated: 2026/01/09 23:09:27 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/01/20 08:40:17 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GRAPH
-# define GRAPH
+#ifndef GRAPH_H
+# define GRAPH_H
 
+# include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <fcntl.h>
 # include <libft.h>
 # include <struct.h>
+# include <global_variables.h>
 
 /* action.c */
-int		is_exit(t_state *current);
-int		exit_or_action(t_state *current);
+int		is_exit(t_state *current, t_map_content *map);
+int		exit_or_action(t_state *current, t_map_content *map);
 
 /* bfs.c */
-int		add_to__queue(t_queue q, t_state futur);
-t_state	get_from_queue(t_queue q);
+int		add_to_queue(t_queue *q, t_state *futur);
+t_state	*get_from_queue(t_queue *q);
 void	add_adjacency(t_state *actual, t_state *futur);
-int		bfs(t_queue **q, t_bst **tree);
+int		bfs(t_queue *q, t_bst *tree, t_map_content *map);
 
 /* bst.c */
 int		compare_states(t_state *a, t_state *b);
-int		bst_search(t_bst **tree, t_state *futur);
-void	bst_insert(t_bst **tree, t_state *new);
+int		bst_search(t_bst *tree, t_state *futur);
+void	bst_insert(t_bst *tree, t_state *new);
 
+/* graph_process.c */
+void	complete_adjacency_matrice(t_bst *tree, char ***adj);
+char	**make_adjacency_matrice(t_bst *tree, int nb_state);
+void	print_adjacency_matrice(char **adjacency);
 
+/* move.c */
+t_state	*new_state(int nb_possible_states);
+void	free_state(t_state *state);
+t_state	*create_futur_state(t_state *actual, int x, int y);
+void	get_xy(t_state *actual, int *x, int *y, int move, t_map_content *map);
+t_state	*move(t_state *actual, int move, t_map_content *map);
+
+#endif
