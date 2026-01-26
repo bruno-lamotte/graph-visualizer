@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 22:52:17 by blamotte          #+#    #+#             */
-/*   Updated: 2026/01/26 04:20:36 by marvin           ###   ########.fr       */
+/*   Updated: 2026/01/26 04:34:57 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,9 @@ int	parsing_map(char *out, t_map_content *map)
 	if (!map->data_positions)
 		return (0);
 	map->initial_position = find_char_index(out, INITIAL_CHAR);
+	if (find_char_index(out, INITIAL_CHAR + map->initial_position + 1) || 
+		find_char_index(out, EXIT_CHAR + map->exit_position + 1))
+		return (0);
 	map->exit_position = find_char_index(out, EXIT_CHAR);
 	if (!(map->initial_position) || (!map->exit_position) || (!is_map_valid(out, map)))
 		return (0);
