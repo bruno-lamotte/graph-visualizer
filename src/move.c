@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 23:05:43 by blamotte          #+#    #+#             */
-/*   Updated: 2026/01/20 11:13:07 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/01/26 04:10:02 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_state	*new_state(int nb_possible_states)
 	new->block_data = ft_calloc(nb_possible_states + 1, sizeof(char));
 	if (!new->block_data)
 		return (NULL);
-	new->adjacencies = ft_lstnew(NULL);
+	new->adjacencies = NULL;
 	return (new);
 }
 
@@ -37,7 +37,7 @@ void	free_state(t_state *state)
 	if (state->block_data)
 		free(state->block_data);
 	if (state->adjacencies)
-		ft_lstclear(&state->adjacencies, NULL);
+		ft_lstclear(&state->adjacencies, free);
 	free(state);
 }
 
@@ -46,34 +46,57 @@ t_state	*create_futur_state(t_state *actual, int x, int y)
 	t_state	*futur;
 
 	futur = new_state(actual->data_size);
-	futur->block_data = actual->block_data;
-	add_adjacency(actual, futur);
+	if (!futur)
+		return (NULL);
+	ft_memcpy(futur->block_data, actual->block_data, actual->data_size);
 	futur->x = x;
 	futur->y = y;
 	return (futur);
 }
 
-void	get_xy(t_state *actual, int *x, int *y, int move, t_map_content *map)
+int is_blocked(int target_pos, t_map_content *map, t_state *current)
+{
+    int data_state;
+    int byte_index;
+    int bit_index;
+
+    if (map->map[target_pos] == WALL_CHAR)
+        return (1);
+    data_state = map->data_positions[target_pos];
+    if (data_state)
+    {
+        byte_index = (data_state - 1) / 8;
+        bit_index = (data_state - 1) % 8;
+        if ((current->block_data[byte_index] >> bit_index) & 1)
+            return (1);
+    }
+    return (0);
+}
+
+int	get_xy(t_state *actual, int *x, int *y, int move, t_map_content *map)
 {
 	int	new_position;
 	int	width;
+	int	original_position;
 
 	width = map->width;
-	new_position = actual->y * width + actual->x;
+	original_position = actual->y * width + actual->x;
+	new_position = original_position;
 	if (move == UP)
-		while (map->map[new_position - width] != '1')
+		while (!is_blocked(new_position - width, map, actual))
 			new_position -= width;
 	if (move == RIGHT)
-		while (map->map[new_position + 1] != '1')
+		while (!is_blocked(new_position + 1, map, actual))
 			new_position += 1;
 	if (move == DOWN)
-		while (map->map[new_position + width] != '1')
+		while (!is_blocked(new_position + width, map, actual))
 			new_position += width;
 	if (move == LEFT)
-		while (map->map[new_position - 1] != '1')
+		while (!is_blocked(new_position - 1, map, actual))
 			new_position -= 1;
 	*x = new_position % width;
 	*y = new_position / width;
+	return (*x > 0 && *y > 0 && new_position != original_position);
 }
 
 t_state	*move(t_state *actual, int move, t_map_content *map)
@@ -82,12 +105,14 @@ t_state	*move(t_state *actual, int move, t_map_content *map)
 	int		new_x;
 	int		new_y;
 
-	new_x = -1;
-	new_y = -1;
+	new_x = 0;
+	new_y = 0;
 	
 	if (move == UP || move == RIGHT || move == DOWN || move == LEFT)
-		get_xy(actual, &new_x, &new_y, move, map);
+		if (!get_xy(actual, &new_x, &new_y, move, map))
+			return (NULL);
 	futur = create_futur_state(actual, new_x , new_y);
-	futur->state_index = actual->state_index + move;
+	if (!futur)
+		return (NULL);
 	return (futur);
 }

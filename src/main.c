@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 22:52:17 by blamotte          #+#    #+#             */
-/*   Updated: 2026/01/20 10:19:19 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/01/26 04:20:36 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,71 @@ int	find_char_index(char *line, char c)
 	}
 	return (0);
 }
-
-int	count_special_char(char *out)
+int	is_map_valid(char *out, t_map_content *map)
 {
-	(void)out;
-	return (0);
+	int	i;
+
+	i = 0;
+	if (!out)
+		return (0);
+	while (out[i])
+	{
+		if ((i < map->width || i > (int)ft_strlen(out) - map->width
+			|| i % map->width == 0 || i % map->width == map->width - 1)
+			&& out[i] != WALL_CHAR && out[i] != '\n')
+			return (0);
+		else if (out[i] != WALL_CHAR && out[i] != EMPTY_CHAR
+			&& out[i] != INITIAL_CHAR && out[i] != EXIT_CHAR
+			&& out[i] != COLLECTIBLE_CHAR && out[i] != '\n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	count_special_char(char *out, t_map_content *map)
+{
+	int	count;
+	int	i;
+
+	count = 1;
+	i = 0;
+	while (out[i])
+	{
+		if (out[i] == COLLECTIBLE_CHAR)
+			map->data_positions[i] = 1;
+		i++;
+	}
+	return (count);
 }
 
 int	parsing_map(char *out, t_map_content *map)
 {
+	if (!out)
+		return (0);
+	map->data_positions = ft_calloc(ft_strlen(out), sizeof(int));
+	if (!map->data_positions)
+		return (0);
 	map->initial_position = find_char_index(out, INITIAL_CHAR);
 	map->exit_position = find_char_index(out, EXIT_CHAR);
-	if (!(map->initial_position) || (!map->exit_position))
+	if (!(map->initial_position) || (!map->exit_position) || (!is_map_valid(out, map)))
 		return (0);
-	map->data_size = count_special_char(out);
+	map->data_size = count_special_char(out, map);
 	return (1);
+}
+
+int check_extension(char *filename)
+{
+    int len;
+
+    if (!filename)
+        return (0);
+    len = ft_strlen(filename);
+    if (len < 4)
+        return (0);
+    if (ft_strncmp(filename + len - 4, ".ber", 4) != 0)
+        return (0);
+    return (1);
 }
 
 char	*get_map(int ac, char **av, t_map_content *map)
@@ -52,6 +102,8 @@ char	*get_map(int ac, char **av, t_map_content *map)
 	char	*tmp;
 	
 	out = NULL;
+	if (!check_extension(av[ac - 1]))
+		return (NULL);
 	fd = open(av[ac - 1], O_RDONLY);
 	line = get_next_line(fd);
 	map->width = ft_strlen(line);
@@ -71,9 +123,14 @@ char	*get_map(int ac, char **av, t_map_content *map)
 		free(line);
 		line = get_next_line(fd);
 	}
-	free(line);
+	if (line)
+		free(line);
 	if (!parsing_map(out, map))
+	{
+		free(out);
+		close(fd);
 		return (NULL);
+	}
 	close(fd);
 	return (out);
 }
@@ -108,7 +165,7 @@ int main (int ac, char **av)
 	t_bst			tree;
 	char			**adjacency;
 	
-	if (ac > 2 || ac < 1)
+	if (ac > 2 || ac < 2)
 		return (0);
 	map.map = get_map(ac, av, &map);
 	if (!map.map)
@@ -120,6 +177,11 @@ int main (int ac, char **av)
 		return (0);
 	adjacency = make_adjacency_matrice(&tree, nb_state);
 	if (adjacency)
-		print_adjacency_matrice(adjacency);
+		print_adjacency_matrice(adjacency, nb_state);
+	free_adjacency_matrice(adjacency, nb_state);
+	free_bst(tree.left);
+	free_bst(tree.right);
+	free_state(tree.state);
+	free(map.map);
 	return (0);
 }

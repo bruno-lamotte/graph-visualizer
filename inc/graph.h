@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graph.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 20:52:29 by blamotte          #+#    #+#             */
-/*   Updated: 2026/01/20 08:40:17 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/01/23 19:23:04 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,21 @@ int		bfs(t_queue *q, t_bst *tree, t_map_content *map);
 
 /* bst.c */
 int		compare_states(t_state *a, t_state *b);
-int		bst_search(t_bst *tree, t_state *futur);
+t_state	*bst_search(t_bst *tree, t_state *futur);
+void	free_bst(t_bst *tree);
 void	bst_insert(t_bst *tree, t_state *new);
 
 /* graph_process.c */
 void	complete_adjacency_matrice(t_bst *tree, char ***adj);
 char	**make_adjacency_matrice(t_bst *tree, int nb_state);
-void	print_adjacency_matrice(char **adjacency);
+void	free_adjacency_matrice(char **adjacency, int nb_state);
+void	print_adjacency_matrice(char **adjacency, int nb_state);
 
 /* move.c */
 t_state	*new_state(int nb_possible_states);
 void	free_state(t_state *state);
 t_state	*create_futur_state(t_state *actual, int x, int y);
-void	get_xy(t_state *actual, int *x, int *y, int move, t_map_content *map);
+int     get_xy(t_state *actual, int *x, int *y, int move, t_map_content *map);
 t_state	*move(t_state *actual, int move, t_map_content *map);
 
 #endif

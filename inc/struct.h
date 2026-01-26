@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 04:05:37 by blamotte          #+#    #+#             */
-/*   Updated: 2026/01/20 07:06:08 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/01/26 03:09:35 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ typedef struct	s_map_content
 {
 	char	*map;
 	int		width;
+	int		*data_positions;
 	size_t	data_size;
 	int		initial_position;
 	int		exit_position;

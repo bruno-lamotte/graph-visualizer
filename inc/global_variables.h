@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   global_variables.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 23:08:29 by blamotte          #+#    #+#             */
-/*   Updated: 2026/01/20 07:35:40 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/01/26 03:42:09 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,18 @@
 
 # ifndef EXIT_CHAR
 #  define EXIT_CHAR 'E'
+# endif
+
+# ifndef COLLECTIBLE_CHAR
+#  define COLLECTIBLE_CHAR 'C'
+# endif
+
+# ifndef WALL_CHAR
+#  define WALL_CHAR '1'
+# endif
+
+# ifndef EMPTY_CHAR
+#  define EMPTY_CHAR '0'
 # endif
 
 /*moves*/
