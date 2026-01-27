@@ -31,8 +31,8 @@ def save_map(grid, filename="map_sym.ber"):
             f.write("".join(row) + "\n")
 
 # --- Paramètres ---
-W, H = 20, 10
-map_data = generate_symmetric_map(W, H, wall_density=0.15)
+W, H = 30, 20
+map_data = generate_symmetric_map(W, H, wall_density=0.20)
 
 # Placement basique P et E pour l'exemple
 # (Dans ton projet C, tu feras ça intelligemment via BFS)

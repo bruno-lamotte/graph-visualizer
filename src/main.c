@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 22:52:17 by blamotte          #+#    #+#             */
-/*   Updated: 2026/01/26 04:34:57 by marvin           ###   ########.fr       */
+/*   Updated: 2026/01/27 11:20:56 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,14 @@ int	find_char_index(char *line, char c)
 	}
 	return (0);
 }
+
+int	is_acceptable_char(char c)
+{
+	if (c == WALL_CHAR || c == INITIAL_CHAR || c == EXIT_CHAR || c == EMPTY_CHAR
+		|| c == COLECTIBLE_CHAR || c == BREAKABLE_CHAR || c == HOLE_CHAR)
+		return (1);
+	return (0);
+}
 int	is_map_valid(char *out, t_map_content *map)
 {
 	int	i;
@@ -40,9 +48,7 @@ int	is_map_valid(char *out, t_map_content *map)
 			|| i % map->width == 0 || i % map->width == map->width - 1)
 			&& out[i] != WALL_CHAR && out[i] != '\n')
 			return (0);
-		else if (out[i] != WALL_CHAR && out[i] != EMPTY_CHAR
-			&& out[i] != INITIAL_CHAR && out[i] != EXIT_CHAR
-			&& out[i] != COLLECTIBLE_CHAR && out[i] != '\n')
+		else if (!is_acceptable_char(out[i]) && out[i] != '\n')
 			return (0);
 		i++;
 	}
@@ -53,13 +59,21 @@ int	count_special_char(char *out, t_map_content *map)
 {
 	int	count;
 	int	i;
+	int byte_index;
+    int bit_index;
 
 	count = 1;
 	i = 0;
 	while (out[i])
 	{
-		if (out[i] == COLLECTIBLE_CHAR)
-			map->data_positions[i] = 1;
+		if (out[i] == COLECTIBLE_CHAR || out[i] == BREAKABLE_CHAR)
+			map->data_positions[i] = count++;
+		if (out[i] == COLECTIBLE_CHAR)
+		{
+			byte_index = (map->data_positions[i]) / 64;
+			bit_index = (map->data_positions[i]) % 64;
+			map->exit_mask[byte_index] |= (1ULL << bit_index);
+		}
 		i++;
 	}
 	return (count);
@@ -79,7 +93,9 @@ int	parsing_map(char *out, t_map_content *map)
 	map->exit_position = find_char_index(out, EXIT_CHAR);
 	if (!(map->initial_position) || (!map->exit_position) || (!is_map_valid(out, map)))
 		return (0);
-	map->data_size = count_special_char(out, map);
+	ft_bzero(map->exit_mask, sizeof(map->exit_mask));
+	if (count_special_char(out, map) >= 256)
+		return (0);
 	return (1);
 }
 
@@ -143,7 +159,7 @@ int	initialize_all(t_queue *q, t_bst *tree, t_map_content *map)
 	t_state	*first_state;
 	t_qnode	*first_qnode;
 
-	first_state = new_state(map->data_size);
+	first_state = new_state();
 	first_qnode = malloc(sizeof(t_qnode));
 	if (!first_state || !first_qnode)
 		return (0);
@@ -158,10 +174,18 @@ int	initialize_all(t_queue *q, t_bst *tree, t_map_content *map)
 	q->rear	= first_qnode;
 	return (1);
 }
+void	free_palestine(t_bst *tree, t_map_content *map, char **adjacency, int nb_state)
+{
+	free_adjacency_matrice(adjacency, nb_state);
+	free_bst(tree->left);
+	free_bst(tree->right);
+	free_state(tree->state);
+	free(map->map);
+	free(map->data_positions);
+}
 
 int main (int ac, char **av)
 {
-	//ft_printf("bjr/n");
 	t_map_content	map;
 	int				nb_state;
 	t_queue			q;
@@ -181,10 +205,6 @@ int main (int ac, char **av)
 	adjacency = make_adjacency_matrice(&tree, nb_state);
 	if (adjacency)
 		print_adjacency_matrice(adjacency, nb_state);
-	free_adjacency_matrice(adjacency, nb_state);
-	free_bst(tree.left);
-	free_bst(tree.right);
-	free_state(tree.state);
-	free(map.map);
+	free_palestine(&tree, &map, adjacency, nb_state);
 	return (0);
 }

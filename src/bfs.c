@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bfs.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 07:53:04 by blamotte          #+#    #+#             */
-/*   Updated: 2026/01/25 03:11:55 by marvin           ###   ########.fr       */
+/*   Updated: 2026/01/27 11:28:17 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,17 @@ int	bfs(t_queue *q, t_bst *tree, t_map_content *map)
 	while (q->front)
 	{
 		actual = get_from_queue(q);
-	//	printf("Processing state %d (x=%d, y=%d), front=%p\n", 
-	//		actual->state_index, actual->x, actual->y, (void*)q->front);
-		if (exit_or_action(actual, map))
+		printf("Processing state %d (x=%d, y=%d)\n", 
+			actual->state_index, actual->x, actual->y);
+		if (is_exit(actual, map))
 		{
 			write(1, "\n\nEXIT\n\n", 9);
-	//		continue ;
+	//		break ;
+		}
+		if (is_hole(actual, map))
+		{
+			write(1, "\n\nHOLE\n\n", 9);
+			continue ;
 		}
 		i = 1;
 		while (i <= NB_POSSIBLE_MOVES)
@@ -94,7 +99,7 @@ int	bfs(t_queue *q, t_bst *tree, t_map_content *map)
 				if (!existing)
 				{
 					futur->state_index = state_counter++;
-					printf("  New state: %d\n", futur->state_index);
+	//				printf("  New state: %d\n", futur->state_index);
 					add_adjacency(actual, futur);
 					bst_insert(tree, futur);
 					if (!add_to_queue(q, futur))

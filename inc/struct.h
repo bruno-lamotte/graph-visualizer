@@ -3,26 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 04:05:37 by blamotte          #+#    #+#             */
-/*   Updated: 2026/01/26 03:09:35 by marvin           ###   ########.fr       */
+/*   Updated: 2026/01/27 10:43:22 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # define STRUCT
 
 # include <libft.h>
+# include <stdint.h>
+# include <global_variables.h>
 
 typedef struct	s_map_content
 {
-	char	*map;
-	int		width;
-	int		*data_positions;
-	size_t	data_size;
-	int		initial_position;
-	int		exit_position;
-}			t_map_content;
+	char			*map;
+	int				width;
+	int				*data_positions;
+	int				initial_position;
+	int				exit_position;
+	uint64_t		exit_mask[MAX_DATA_CHUNKS];
+}					t_map_content;
 
 typedef struct	s_state
 {
@@ -30,7 +32,7 @@ typedef struct	s_state
 	int				x;
 	int				y;
 	size_t			data_size;
-	unsigned char	*block_data;
+	uint64_t		block_data[MAX_DATA_CHUNKS];
 	struct	s_state	*parent;
 	t_list			*adjacencies;
 }					t_state;

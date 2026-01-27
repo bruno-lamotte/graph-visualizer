@@ -6,7 +6,7 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 20:44:32 by blamotte          #+#    #+#             */
-/*   Updated: 2026/01/20 07:19:04 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/01/27 10:11:24 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,35 @@
 
 int	is_exit(t_state *current, t_map_content *map)
 {
-	return (current->y * map->width + current->x == map->exit_position);
+	int	i;
+
+	if (current->y * map->width + current->x != map->exit_position)
+		return (0);
+	i = 0;
+	while (i < MAX_DATA_CHUNKS)
+	{
+		if ((current->block_data[i] & map->exit_mask[i]) != map->exit_mask[i])
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
-int	exit_or_action(t_state *current, t_map_content *map)
+int	is_hole(t_state *current, t_map_content *map)
 {
-	if (is_exit(current, map))
-		return (1);
-	return (0);
+	int data_state;
+    int byte_index;
+    int bit_index;
+	int target_pos;
+
+	target_pos = current->y * map->width + current->x;
+    data_state = map->data_positions[target_pos];
+    if (data_state && map->map[target_pos] == BREAKABLE_CHAR)
+    {
+        byte_index = (data_state - 1) / 64;
+        bit_index = (data_state - 1) % 64;
+        if ((current->block_data[byte_index] >> bit_index) & 1)
+            return (1);
+    }
+    return (0);
 }
-
-

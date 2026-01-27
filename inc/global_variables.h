@@ -3,17 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   global_variables.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 23:08:29 by blamotte          #+#    #+#             */
-/*   Updated: 2026/01/26 03:42:09 by marvin           ###   ########.fr       */
+/*   Updated: 2026/01/27 10:15:41 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GLOBAL_VARIABLES
 #define GLOBAL_VARIABLES
 
+/*limits*/
+
+# ifndef MAX_DATA_CHUNKS
+#  define MAX_DATA_CHUNKS 4 // 4 * 64 = 256 objets max
+# endif
+
 /*statut changes*/
+
 # ifndef INITIAL_CHAR
 #  define INITIAL_CHAR 'P'
 # endif
@@ -22,8 +29,16 @@
 #  define EXIT_CHAR 'E'
 # endif
 
-# ifndef COLLECTIBLE_CHAR
-#  define COLLECTIBLE_CHAR 'C'
+# ifndef COLECTIBLE_CHAR
+#  define COLECTIBLE_CHAR 'C'
+# endif
+
+# ifndef BREAKABLE_CHAR
+#  define BREAKABLE_CHAR '?'
+# endif
+
+# ifndef HOLE_CHAR
+#  define HOLE_CHAR '!'
 # endif
 
 # ifndef WALL_CHAR

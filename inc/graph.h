@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graph.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 20:52:29 by blamotte          #+#    #+#             */
-/*   Updated: 2026/01/23 19:23:04 by marvin           ###   ########.fr       */
+/*   Updated: 2026/01/27 10:53:27 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,12 @@
 # include <fcntl.h>
 # include <libft.h>
 # include <struct.h>
+# include <stdint.h>
 # include <global_variables.h>
 
 /* action.c */
 int		is_exit(t_state *current, t_map_content *map);
-int		exit_or_action(t_state *current, t_map_content *map);
+int     is_hole(t_state *current, t_map_content *map);
 
 /* bfs.c */
 int		add_to_queue(t_queue *q, t_state *futur);
@@ -44,7 +45,7 @@ void	free_adjacency_matrice(char **adjacency, int nb_state);
 void	print_adjacency_matrice(char **adjacency, int nb_state);
 
 /* move.c */
-t_state	*new_state(int nb_possible_states);
+t_state	*new_state(void);
 void	free_state(t_state *state);
 t_state	*create_futur_state(t_state *actual, int x, int y);
 int     get_xy(t_state *actual, int *x, int *y, int move, t_map_content *map);
