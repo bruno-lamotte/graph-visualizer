@@ -6,20 +6,19 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 06:43:46 by blamotte          #+#    #+#             */
-/*   Updated: 2026/01/27 10:12:18 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/02/06 03:12:51 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <graph.h>
 
-
-int compare_states(t_state *a, t_state *b)
+int	compare_states(t_state *a, t_state *b)
 {
-    if (a->x != b->x)
+	if (a->x != b->x)
 		return (a->x - b->x);
-    if (a->y != b->y)
+	if (a->y != b->y)
 		return (a->y - b->y);
-    return (ft_memcmp(a->block_data, b->block_data, sizeof(a->block_data)));
+	return (ft_memcmp(a->block_data, b->block_data, sizeof(a->block_data)));
 }
 
 t_state	*bst_search(t_bst *tree, t_state *futur)
@@ -61,29 +60,21 @@ void	bst_insert(t_bst *tree, t_state *new)
 	if (!new_node)
 		return ;
 	new_node->state = new;
-	new_node->left = NULL;
-	new_node->right = NULL;
+	(1 && (new_node->left = NULL), (new_node->right = NULL));
 	while (tree)
 	{
 		direction = compare_states(tree->state, new);
 		if (direction > 0)
 		{
 			if (!tree->left)
-			{
-				tree->left = new_node;
-				return ;
-			}
+				return ((void)(tree->left = new_node));
 			tree = tree->left;
 		}
 		else
 		{
 			if (!tree->right)
-			{
-				tree->right = new_node;
-				return ;
-			}
+				return ((void)(tree->right = new_node));
 			tree = tree->right;
 		}
 	}
 }
-

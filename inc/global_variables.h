@@ -6,12 +6,12 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 23:08:29 by blamotte          #+#    #+#             */
-/*   Updated: 2026/01/31 07:37:52 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/02/06 03:41:57 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GLOBAL_VARIABLES
-#define GLOBAL_VARIABLES
+#ifndef GLOBAL_VARIABLES_H
+# define GLOBAL_VARIABLES_H
 
 /*mlx*/
 

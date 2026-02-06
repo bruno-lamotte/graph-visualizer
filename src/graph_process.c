@@ -6,35 +6,53 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 21:08:49 by blamotte          #+#    #+#             */
-/*   Updated: 2026/02/05 20:55:39 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/02/06 04:01:03 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <graph.h>
+
+void	add_adjacency(t_state *actual, t_state *futur)
+{
+	t_list	*new_adj;
+	int		*index_copy;
+
+	index_copy = malloc(sizeof(int));
+	if (!index_copy)
+		return ;
+	*index_copy = futur->state_index;
+	new_adj = ft_lstnew(index_copy);
+	if (!new_adj)
+	{
+		free(index_copy);
+		return ;
+	}
+	ft_lstadd_back(&actual->adjacencies, new_adj);
+}
 
 void	complete_adjacency_matrice(t_bst *tree, char ***adj)
 {
 	t_list	*current;
 
 	if (!tree || !tree->state)
-	return ;
-current = tree->state->adjacencies;
-while (current && current->content)
-{
-	(*adj)[tree->state->state_index][*(int *)current->content] = '1';
+		return ;
+	current = tree->state->adjacencies;
+	while (current && current->content)
+	{
+		(*adj)[tree->state->state_index][*(int *)current->content] = '1';
 		current = current->next;
 	}
 	if (tree->right)
-	complete_adjacency_matrice(tree->right, adj);
-if (tree->left)
-complete_adjacency_matrice(tree->left, adj);
+		complete_adjacency_matrice(tree->right, adj);
+	if (tree->left)
+		complete_adjacency_matrice(tree->left, adj);
 }
 
 char	**make_adjacency_matrice(t_bst *tree, int nb_state)
 {
 	char	**adjacency;
 	int		i;
-	
+
 	adjacency = ft_calloc(nb_state + 1, sizeof(char *));
 	if (!adjacency)
 		return (NULL);
@@ -87,5 +105,3 @@ void	print_adjacency_matrice(char **adjacency, int nb_state)
 		y++;
 	}
 }
-
-

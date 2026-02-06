@@ -6,7 +6,7 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 20:52:29 by blamotte          #+#    #+#             */
-/*   Updated: 2026/02/05 20:33:54 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/02/06 03:52:31 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@
 # include <global_variables.h>
 # include "mlx.h"
 # include "mlx_int.h"
-#include "display.h"
-#include <sys/time.h>
+# include "display.h"
+# include <sys/time.h>
 
 /* action.c */
 int		is_exit(t_state *current, t_map_content *map);
-int     is_hole(t_state *current, t_map_content *map);
+int		is_hole(t_state *current, t_map_content *map);
 
 /* bfs.c */
 int		add_to_queue(t_queue *q, t_state *futur);
@@ -48,14 +48,28 @@ char	**make_adjacency_matrice(t_bst *tree, int nb_state);
 void	free_adjacency_matrice(char **adjacency, int nb_state);
 void	print_adjacency_matrice(char **adjacency, int nb_state);
 
-/* move.c */
+/* handle_state.c */
 t_state	*new_state(void);
 void	free_state(t_state *state);
 t_state	*create_futur_state(t_state *actual, int x, int y);
-int     get_xy(t_state *actual, int *x, int *y, int move, t_map_content *map);
-t_state	*move(t_state *actual, int move, t_map_content *map);
-int	get_step(t_state *actual, t_state *futur, t_map_content *map);
 
-int		is_solvable(int ac, char **av, t_map_content *map);
+/* move.c */
+int		get_xy(t_state *actual, int move, t_map_content *map);
+t_state	*move(t_state *actual, int move, t_map_content *map);
+int		get_step(t_state *actual, t_state *futur, t_map_content *map);
+
+/* parsing.c */
+int		find_char_index(char *line, char c);
+int		is_acceptable_char(char c);
+int		is_map_valid(char *out, t_map_content *map);
+int		count_special_char(char *out, t_map_content *map);
+int		parsing_map(char *out, t_map_content *map);
+
+/* utils.c */
+int		check_extension(char *filename);
+void	free_palestine(t_bst *tree, char **adjacency, int nb_state);
+
+/* solve_map.c */
+int		is_solvable(int ac, char **av, t_map_content *map, int is_test);
 
 #endif

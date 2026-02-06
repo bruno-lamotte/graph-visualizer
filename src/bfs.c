@@ -6,11 +6,18 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 07:53:04 by blamotte          #+#    #+#             */
-/*   Updated: 2026/02/05 21:57:47 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/02/06 04:07:17 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <graph.h>
+
+typedef struct s_bfs_var
+{
+	t_bst		*tree;
+	t_queue		*q;
+	int			*counter;
+}				t_bfs_var;
 
 int	add_to_queue(t_queue *q, t_state *futur)
 {
@@ -46,28 +53,12 @@ t_state	*get_from_queue(t_queue *q)
 	return (state);
 }
 
-void	add_adjacency(t_state *actual, t_state *futur)
-{
-	t_list	*new_adj;
-	int		*index_copy;
-
-	index_copy = malloc(sizeof(int));
-	if (!index_copy)
-		return ;
-	*index_copy = futur->state_index;
-	new_adj = ft_lstnew(index_copy);
-	if (!new_adj)
-	{
-		free(index_copy);
-		return ;
-	}
-	ft_lstadd_back(&actual->adjacencies, new_adj);
-}
-
 void	free_queue(t_queue *q)
 {
 	t_qnode	*temp;
 
+	if (!q)
+		return ;
 	while (q->front)
 	{
 		temp = q->front;
@@ -77,58 +68,51 @@ void	free_queue(t_queue *q)
 	q->rear = NULL;
 }
 
+int	process_futur(t_state *actual, t_state *futur, t_bfs_var *var)
+{
+	t_state	*existing;
+
+	existing = bst_search(var->tree, futur);
+	if (!existing)
+	{
+		futur->state_index = (*var->counter)++;
+		add_adjacency(actual, futur);
+		bst_insert(var->tree, futur);
+		if (!add_to_queue(var->q, futur))
+			return (0);
+	}
+	else
+	{
+		add_adjacency(actual, existing);
+		free_state(futur);
+	}
+	return (1);
+}
+
 int	bfs(t_queue *q, t_bst *tree, t_map_content *map)
 {
-	t_state *actual;
-	t_state *futur;
-	t_state *existing;
-	int		i;
-	int		state_counter;
+	t_state		*actual;
+	t_state		*futur;
+	int			i;
+	int			state_counter;
+	t_bfs_var	var;
 
 	state_counter = 1;
+	var = (t_bfs_var){tree, q, &state_counter};
 	while (q->front)
 	{
 		actual = get_from_queue(q);
-//		printf("Processing state %d (x=%d, y=%d)\n", 
-//			actual->state_index, actual->x, actual->y);
 		if (is_exit(actual, map))
-		{
-			write(1, "\n\nEXIT\n\n", 9);
-			break ;
-		}
+			return (free_queue(q), state_counter);
 		if (is_hole(actual, map))
-		{
-//			write(1, "\n\nHOLE\n\n", 9);
 			continue ;
-		}
-		i = 1;
-		while (i <= NB_POSSIBLE_MOVES)
+		i = 0;
+		while (++i <= NB_POSSIBLE_MOVES)
 		{
 			futur = move(actual, i, map);
-			if (futur)
-			{
-	//			printf("  Move %d -> (x=%d, y=%d)\n", i, futur->x, futur->y);
-				existing = bst_search(tree, futur);
-				if (!existing)
-				{
-					futur->state_index = state_counter++;
-	//				printf("  New state: %d\n", futur->state_index);
-					add_adjacency(actual, futur);
-					bst_insert(tree, futur);
-					if (!add_to_queue(q, futur))
-						return (0);
-				}
-				else
-				{
-	//				printf("  Already visited (state %d)\n", existing->state_index);
-					add_adjacency(actual, existing);
-					free_state(futur);
-				}
-			}
-			i++;
+			if (futur && !process_futur(actual, futur, &var))
+				return (free_queue(q), 0);
 		}
 	}
-	free_queue(q);
-	//printf("BFS finished, total states: %d\n", state_counter);
-	return (state_counter);
+	return (free_queue(q), 0);
 }

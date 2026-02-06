@@ -25,8 +25,11 @@ SRC_FILES   = display.c \
 			  bfs.c \
 			  bst.c \
 			  graph_process.c \
+			  handle_state.c \
+			  move.c \
+			  parsing.c \
 			  solve_map.c \
-			  move.c  
+			  utils.c  
 
 SRCS        = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 
