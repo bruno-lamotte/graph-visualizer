@@ -1,47 +1,46 @@
 /* XPM */
 static char *player_xpm[] = {
 /* columns rows colors chars-per-pixel */
-"32 32 9 1 ",
-"  c #DDDDEE", /* Glace claire */
-". c #8888AA", /* Glace moyenne */
-"X c #444455", /* Glace foncée */
-"o c #000000", /* Noir Contour */
-"R c #FF0000", /* Rouge Vif (Casquette) */
-"Y c #FFCC00", /* Jaune (Sac/Détails) */
-"S c #FFCC99", /* Peau */
-"B c #0000FF", /* Bleu (Veste) */
-"w c #FFFFFF", /* Blanc (Yeux/Glace) */
+"32 32 8 1",
+". c #AABBCC",
+"p c #FFAACC",
+"P c #FFCCDD",
+"o c #000000",
+"w c #FFFFFF",
+"c c #44CCCC",
+"e c #FF8899",
+"E c #FFBBCC",
 /* pixels */
-" .  .  .  oooooo .  .  .  .  . ",
-".  .  .  oRRRRRRoo .  .  .  . .",
-"  .  .  oRRRRRRRRRoo  .  .  . ",
-" .  .  oRRRRRRRRRRRo .  .  .  ",
-".  .  .oRRRRRRRRRRRo .  .  . .",
-"  .  . ooooRRRRRoooo.  .  .  . ",
-" .  .  oSSoooooooSSo  .  .  . ",
-".  .  oSwwSooooSwwoSo.  .  . .",
-"  .  . oSSSooooS SSoX .  .  . ",
-" .  .  .oSSSSSSSSSoXX.  .  .  ",
-".  .  oooBBBBBBBBBooo.  .  . .",
-"  .  oooBBBBBBBBBBBooo.  .  . ",
-" .  oYYoBBBBBBBBBBBoYYo .  .  ",
-".  .oYYoBBBBBBBBBBBoYYo.  .  .",
-"  . oYYoBBBBBBBBBBBoYYo .  .  ",
-" .  ooooBBBBBBBBBBBoooo.  .  .",
-".  . oooBBBBBBBBBBBoooXXXX . .",
-"  .  oooBBBBBBBBBBBoooXXXXX . ",
-" .  .oSSoBBBBBBBBBoSSoXXXXXX. ",
-".  . oSSooBBBBBBBooSSoXXXXXX. ",
-"  .  oSSooBBBBBBBooSSoXXXXXXX.",
-" .  . ooo oBBBBBo oooXXXXXXXX ",
-".  .  .  .oBBBBBo.  .XXXXXXXX.",
-"  .  . . oBBBBBBBo . XXXXXXX. ",
-" .  .   oBBBo oBBBoo  XXXXX.  ",
-".  .   oBBBo . oBBBoo  XX.  . ",
-"  .   ooooo .  .ooooo.  .  .  ",
-" .   ww .  .  .  . ww.  .  .  ",
-".   w.w.  .  .  . w.w.  .  . .",
-"  .  .  .  .  .  .  .  .  .  . ",
-" .  .  .  .  .  .  .  .  .  .  ",
-".  .  .  .  .  .  .  .  .  .  ."
+"................................",
+"................................",
+"................................",
+"..........pppp..................",
+".........ppPPpp.................",
+"........ppPPPPpp................",
+".......ppppppppppppppp..........",
+"......ppPPPPPPPPPPPPPpp.........",
+".....ppPPPPPPPPPPPPPPPpp........",
+"....ppPPPPPPPPPPPPPPPPPpp.......",
+"....pPPPPPPPPPPPPPPPPPPPp.......",
+"...ppPPPPPPPPPPPPPPPPPPPpp......",
+"...pPPPPPwwwPPPPPPwwwPPPPp......",
+"...pPPPPwcowPPPPPwcowPPPPp......",
+"...pPPPPwcowPPPPPwcowPPPPp......",
+"...pPPPPPwwwPPPPPPwwwPPPPp......",
+"...pPPPPPPPPPPPPPPPPPPPPPp......",
+"...pPPPPPPPPPeePPPPPPPPPPp......",
+"...ppPPPPPPPPPPPPPPPPPPPpp......",
+"....pPPPPPPPPPPPPPPPPPPPp.......",
+"....ppPPPPPPPPPPPPPPPPPpp.......",
+".....ppPPPPPPPPPPPPPPPpp........",
+"......ppPPPPPPPPPPPPPpp.........",
+".......pppPPPPPPPPPppp..........",
+"........EEppppppppppEE..........",
+".......EEE..........EEE.........",
+"................................",
+"................................",
+"................................",
+"................................",
+"................................",
+"................................"
 };

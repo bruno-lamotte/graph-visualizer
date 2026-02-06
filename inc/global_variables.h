@@ -6,7 +6,7 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 23:08:29 by blamotte          #+#    #+#             */
-/*   Updated: 2026/02/06 03:41:57 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/02/06 04:45:51 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,58 @@
 
 # ifndef LEFT
 #  define LEFT 4
+# endif
+
+/*keys*/
+
+# ifndef KEY_ESC
+#  define KEY_ESC 65307
+# endif
+
+# ifndef KEY_W
+#  define KEY_W 'w'
+# endif
+
+# ifndef KEY_A
+#  define KEY_A 'a'
+# endif
+
+# ifndef KEY_S
+#  define KEY_S 's'
+# endif
+
+# ifndef KEY_D
+#  define KEY_D 'd'
+# endif
+
+# ifndef KEY_UP
+#  define KEY_UP 65362
+# endif
+
+# ifndef KEY_DOWN
+#  define KEY_DOWN 65364
+# endif
+
+# ifndef KEY_LEFT
+#  define KEY_LEFT 65361
+# endif
+
+# ifndef KEY_RIGHT
+#  define KEY_RIGHT 65363
+# endif
+
+/*x11 events*/
+
+# ifndef X_EVENT_KEY_PRESS
+#  define X_EVENT_KEY_PRESS 2
+# endif
+
+# ifndef X_EVENT_DESTROY
+#  define X_EVENT_DESTROY 17
+# endif
+
+# ifndef X_MASK_KEY_PRESS
+#  define X_MASK_KEY_PRESS (1L << 0)
 # endif
 
 #endif

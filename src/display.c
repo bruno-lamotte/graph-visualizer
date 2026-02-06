@@ -6,7 +6,7 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 13:29:22 by blamotte          #+#    #+#             */
-/*   Updated: 2026/02/06 04:06:08 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/02/06 04:45:49 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,15 +152,15 @@ int	handle_keypress(int keysym, t_vars *vars)
 	move_dir = 0;
 	nb_moves = 0;
 	next_state = NULL;
-	if (keysym == 65307)
+	if (keysym == KEY_ESC)
 		close_program(vars);
-	if (keysym == 'w' || keysym == 65362)
+	if (keysym == KEY_W || keysym == KEY_UP)
 		move_dir = UP;
-	else if (keysym == 's' || keysym == 65364)
+	else if (keysym == KEY_S || keysym == KEY_DOWN)
 		move_dir = DOWN;
-	else if (keysym == 'a' || keysym == 65361)
+	else if (keysym == KEY_A || keysym == KEY_LEFT)
 		move_dir = LEFT;
-	else if (keysym == 'd' || keysym == 65363)
+	else if (keysym == KEY_D || keysym == KEY_RIGHT)
 		move_dir = RIGHT;
 	if (move_dir != 0)
 	{
@@ -224,6 +224,8 @@ void	initialize_textures(t_vars *vars)
 	int		w;
 	int		h;
 
+	w = 32;
+	h = 32;
 	mlx = vars->mlx;
 	vars->textures.wall = mlx_xpm_file_to_image(mlx, "./textures/wall.xpm", &w,
 			&h);
@@ -258,8 +260,9 @@ int	main(int ac, char **av)
 		close_program(&vars);
 	init_player_state(&vars);
 	render_game(&vars, 0, 0);
-	mlx_hook(vars.win, 2, 1L << 0, handle_keypress, &vars);
-	mlx_hook(vars.win, 17, 0, close_program, &vars);
+	mlx_hook(vars.win, X_EVENT_KEY_PRESS, X_MASK_KEY_PRESS, handle_keypress,
+		&vars);
+	mlx_hook(vars.win, X_EVENT_DESTROY, 0, close_program, &vars);
 	mlx_loop(vars.mlx);
 	close_program(&vars);
 	return (0);
