@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graph_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 21:08:49 by blamotte          #+#    #+#             */
-/*   Updated: 2026/01/23 18:22:40 by marvin           ###   ########.fr       */
+/*   Updated: 2026/02/05 20:55:39 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,24 @@ void	complete_adjacency_matrice(t_bst *tree, char ***adj)
 	t_list	*current;
 
 	if (!tree || !tree->state)
-		return ;
-	current = tree->state->adjacencies;
-	while (current && current->content)
-	{
-		(*adj)[tree->state->state_index][*(int *)current->content] = '1';
+	return ;
+current = tree->state->adjacencies;
+while (current && current->content)
+{
+	(*adj)[tree->state->state_index][*(int *)current->content] = '1';
 		current = current->next;
 	}
 	if (tree->right)
-		complete_adjacency_matrice(tree->right, adj);
-	if (tree->left)
-		complete_adjacency_matrice(tree->left, adj);
+	complete_adjacency_matrice(tree->right, adj);
+if (tree->left)
+complete_adjacency_matrice(tree->left, adj);
 }
 
 char	**make_adjacency_matrice(t_bst *tree, int nb_state)
 {
 	char	**adjacency;
 	int		i;
-
+	
 	adjacency = ft_calloc(nb_state + 1, sizeof(char *));
 	if (!adjacency)
 		return (NULL);

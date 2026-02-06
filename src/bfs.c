@@ -6,7 +6,7 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 07:53:04 by blamotte          #+#    #+#             */
-/*   Updated: 2026/01/27 11:28:17 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/02/05 21:57:47 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,19 @@ void	add_adjacency(t_state *actual, t_state *futur)
 	ft_lstadd_back(&actual->adjacencies, new_adj);
 }
 
+void	free_queue(t_queue *q)
+{
+	t_qnode	*temp;
+
+	while (q->front)
+	{
+		temp = q->front;
+		q->front = q->front->next;
+		free(temp);
+	}
+	q->rear = NULL;
+}
+
 int	bfs(t_queue *q, t_bst *tree, t_map_content *map)
 {
 	t_state *actual;
@@ -76,16 +89,16 @@ int	bfs(t_queue *q, t_bst *tree, t_map_content *map)
 	while (q->front)
 	{
 		actual = get_from_queue(q);
-		printf("Processing state %d (x=%d, y=%d)\n", 
-			actual->state_index, actual->x, actual->y);
+//		printf("Processing state %d (x=%d, y=%d)\n", 
+//			actual->state_index, actual->x, actual->y);
 		if (is_exit(actual, map))
 		{
 			write(1, "\n\nEXIT\n\n", 9);
-	//		break ;
+			break ;
 		}
 		if (is_hole(actual, map))
 		{
-			write(1, "\n\nHOLE\n\n", 9);
+//			write(1, "\n\nHOLE\n\n", 9);
 			continue ;
 		}
 		i = 1;
@@ -115,6 +128,7 @@ int	bfs(t_queue *q, t_bst *tree, t_map_content *map)
 			i++;
 		}
 	}
-	printf("BFS finished, total states: %d\n", state_counter);
+	free_queue(q);
+	//printf("BFS finished, total states: %d\n", state_counter);
 	return (state_counter);
 }

@@ -6,7 +6,7 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 23:05:43 by blamotte          #+#    #+#             */
-/*   Updated: 2026/01/27 11:54:03 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/01/31 08:11:28 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ int is_blocked(int current_pos, int target_pos, t_map_content *map, t_state *cur
     data_state = map->data_positions[current_pos];
     if (data_state && map->map[current_pos] == BREAKABLE_CHAR)
     {
-        byte_index = (data_state) / 64;
-        bit_index = (data_state) % 64;
+        byte_index = (data_state - 1) / 64;
+        bit_index = (data_state - 1) % 64;
         if ((current->block_data[byte_index] >> bit_index) & 1ULL)
             return (1);
     }

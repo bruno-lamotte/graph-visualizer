@@ -1,49 +1,86 @@
-NAME		=	graph
+# **************************************************************************** #
+#                                 CONFIG                                       #
+# **************************************************************************** #
 
-CC			=	cc
-CFLAGS		=	-Wall -Wextra -Werror -MMD -MP -g3
+NAME        = solong
+CC          = cc
+CFLAGS      = -Wall -Wextra -Werror -g3 -O3 -MMD -MP
 
-SRC_DIR		=	src
-OBJ_DIR		=	obj
-INC_DIR		=	inc
-LIBFT_DIR	=	libft
+# **************************************************************************** #
+#                                 CHEMINS                                      #
+# **************************************************************************** #
 
-SRCS		=	$(SRC_DIR)/action.c \
-				$(SRC_DIR)/bfs.c \
-				$(SRC_DIR)/bst.c \
-				$(SRC_DIR)/graph_process.c \
-				$(SRC_DIR)/main.c \
-				$(SRC_DIR)/move.c
+SRC_DIR     = src
+OBJ_DIR     = obj
+INC_DIR     = inc
+LIBFT_DIR   = libft
+MLX_DIR     = minilibx-linux
 
-OBJS		=	$(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
-DEPS		=	$(OBJS:.o=.d)
+# **************************************************************************** #
+#                                 SOURCES                                      #
+# **************************************************************************** #
 
-INCLUDES	=	-I$(INC_DIR) -I$(LIBFT_DIR)
+SRC_FILES   = display.c \
+			  action.c \
+			  bfs.c \
+			  bst.c \
+			  graph_process.c \
+			  solve_map.c \
+			  move.c  
 
-LIBFT		=	$(LIBFT_DIR)/libft.a
+SRCS        = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 
-all:		$(NAME)
+OBJS        = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
+DEPS        = $(OBJS:.o=.d)
 
-$(NAME):	$(LIBFT) $(OBJS)
-			$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+# **************************************************************************** #
+#                                 LIBRARIES                                    #
+# **************************************************************************** #
 
-$(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
-			@mkdir -p $(OBJ_DIR)
-			$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+LIBFT       = $(LIBFT_DIR)/libft.a
+
+MLX         = $(MLX_DIR)/libmlx.a
+
+INCLUDES    = -I$(INC_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)
+
+LIBS_FLAGS  = $(LIBFT) -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
+
+# **************************************************************************** #
+#                                 RÈGLES                                       #
+# **************************************************************************** #
+
+all: $(NAME)
+
+$(NAME): $(LIBFT) $(MLX) $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBS_FLAGS) -o $(NAME)
+	@echo "✅ $(NAME) compiled successfully!"
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(LIBFT):
-			@make -C $(LIBFT_DIR)
+	@echo "Compiling Libft..."
+	@make -sC $(LIBFT_DIR)
+
+$(MLX):
+	@echo "Compiling MiniLibX..."
+	@make -sC $(MLX_DIR)
 
 clean:
-			@make -C $(LIBFT_DIR) clean
-			rm -rf $(OBJ_DIR)
+	@rm -rf $(OBJ_DIR)
+	@make -sC $(LIBFT_DIR) clean
+	@make -sC $(MLX_DIR) clean
+	@echo "🧹 Objects cleaned."
 
-fclean:		clean
-			@make -C $(LIBFT_DIR) fclean
-			rm -f $(NAME)
+fclean: clean
+	@rm -f $(NAME)
+	@make -sC $(LIBFT_DIR) fclean
+	@echo "🗑️  Executable removed."
 
-re:			fclean all
+re: fclean all
 
 -include $(DEPS)
 
-.PHONY:		all clean fclean re
+.PHONY: all clean fclean re
+

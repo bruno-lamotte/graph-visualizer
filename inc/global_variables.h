@@ -6,12 +6,22 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 23:08:29 by blamotte          #+#    #+#             */
-/*   Updated: 2026/01/27 10:15:41 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/01/31 07:37:52 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GLOBAL_VARIABLES
 #define GLOBAL_VARIABLES
+
+/*mlx*/
+
+# ifndef MLX_ERROR
+#  define MLX_ERROR 1
+# endif
+
+# ifndef TILE_SIZE
+#  define TILE_SIZE 32
+# endif
 
 /*limits*/
 

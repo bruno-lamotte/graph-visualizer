@@ -1,0 +1,44 @@
+/* XPM */
+static char *exit_xpm[] = {
+/* columns rows colors chars-per-pixel */
+"32 32 6 1 ",
+"  c #DDDDEE", /* Glace claire */
+". c #8888AA", /* Glace moyenne */
+"X c #444455", /* Glace foncée */
+"o c #000000", /* Noir */
+"B c #8B4513", /* Marron bois foncé */
+"b c #D2B48C", /* Marron bois clair */
+/* pixels */
+" .  . oo .  .  .  . oo .  .  . ",
+".  .  oBo .  .  .  .oBo.  .  .",
+"  .  .oBo .  .  .  .oBo.  .  . ",
+" .  . oBo .  .  .  .oBo.  .  . ",
+".  .  oBoooooooooooooBo.  .  .",
+"  .  .oBbBBBBBBBBBBBbBo.  .  . ",
+" .  . oBoooooooooooooBo.  .  . ",
+".  .  oBo.  .  .  . oBo.  .  .",
+"  .  .oBo .  .  .  .oBo.  .  . ",
+" .  . oBo .  .  .  .oBo.  .  . ",
+".  .  oBoooooooooooooBo.  .  .",
+"  .  .oBbBBBBBBBBBBBbBoX .  . ",
+" .  . oBoooooooooooooBoX.  .  ",
+".  .  oBo.  .  .  . oBoXX.  . .",
+"  .  .oBo .  .  .  .oBoXXX.  . ",
+" .  . oBo .  .  .  .oBoXXXX . ",
+".  .  oBoooooooooooooBoXXXXX . .",
+"  .  .oBbBBBBBBBBBBBbBoXXXXX. . ",
+" .  . oBoooooooooooooBoXXXXXX.  ",
+".  .  oBo.  .  .  . oBoXXXXXXX. ",
+"  .  .oBo .  .  .  .oBoXXXXXXXX.",
+" .  . oBo .  .  .  .oBoXXXXXXXX ",
+".  .  oBoooooooooooooBoXXXXXX. .",
+"  .  .oBbBBBBBBBBBBBbBoXXXXX. . ",
+" .  . oBoooooooooooooBoXXXX.  . ",
+".  .  oBo.  .  .  . oBoXX.  . .",
+"  .  .oBo .  .  .  .oBoX.  .  . ",
+" .  . oBo .  .  .  .oBo.  .  .  ",
+".  .  oBo.  .  .  . oBo.  .  .",
+"  .  . oo .  .  .  . oo.  .  . ",
+" .  .  .  .  .  .  .  .  .  .  ",
+".  .  .  .  .  .  .  .  .  .  ."
+};

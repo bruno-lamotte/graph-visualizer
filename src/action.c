@@ -6,7 +6,7 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 20:44:32 by blamotte          #+#    #+#             */
-/*   Updated: 2026/01/27 10:11:24 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/01/31 08:13:29 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	is_hole(t_state *current, t_map_content *map)
 	int target_pos;
 
 	target_pos = current->y * map->width + current->x;
+	if (map->map[target_pos] == HOLE_CHAR)
+		return (1);
     data_state = map->data_positions[target_pos];
     if (data_state && map->map[target_pos] == BREAKABLE_CHAR)
     {

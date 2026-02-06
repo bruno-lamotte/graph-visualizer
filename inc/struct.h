@@ -6,7 +6,7 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 04:05:37 by blamotte          #+#    #+#             */
-/*   Updated: 2026/01/27 10:43:22 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/01/31 04:39:49 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef struct	s_map_content
 {
 	char			*map;
 	int				width;
+	int				height;
 	int				*data_positions;
 	int				initial_position;
 	int				exit_position;

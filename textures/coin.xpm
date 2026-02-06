@@ -1,0 +1,45 @@
+/* XPM */
+static char *coin_xpm[] = {
+/* columns rows colors chars-per-pixel */
+"32 32 7 1 ",
+"  c #DDDDEE", /* Glace claire (fond) */
+". c #8888AA", /* Glace moyenne (fond) */
+"X c #444455", /* Glace foncée (fond) */
+"o c #000000", /* Noir (contours) */
+"R c #FF0000", /* Rouge vif */
+"r c #CC0000", /* Rouge foncé (ombre) */
+"w c #FFFFFF", /* Blanc */
+/* pixels */
+" .  .  .  .  .  .  .  .  .  .  ",
+".  .  .  .  .  .  .  .  .  .  .",
+"  .  .  .  .  .  .  .  .  .  . ",
+" .  .  .  .  .  .  .  .  .  .  ",
+".  .  .  .  .  oooo  .  .  .  .",
+"  .  .  .  . ooRRRRoo .  .  . ",
+" .  .  .  . oRRRRrrrrò  .  .  ",
+".  .  .  . oRRRRrrrrrro.  .  .",
+"  .  .  . oRRRRrrrrrrrro  .  . ",
+" .  .  . oRRRRrrrrrrrrrro .  . ",
+".  .  . oRRRRRrrrrrrrrrro.  . .",
+"  .  . oRRRRRRrrrrrrrrrrro .  . ",
+" .  .  ooooooooooooooooooo  . ",
+".  .  ooWWWWWWooWWWWWWWWWoo.  . ",
+"  .  oWWWWWWWWooWWWWWWWWWWXo  . ",
+" .  oWWWWWWWWooooWWWWWWWWWWXo . ",
+".  .oWWWWWWWWooWWWWWWWWWWWWXo. .",
+"  . oWWWWWWWWWWWWWWWWWWWWWWXo . ",
+" .  oWWWWWWWWWWWWWWWWWWWWWWXo.  ",
+".  .ooWWWWWWWWWWWWWWWWWWWWXXo . ",
+"  .  oWWWWWWWWWWWWWWWWWWWXXXo.  ",
+" .  .oXWWWWWWWWWWWWWWWWWXXXo  . ",
+".  .  oXXWWWWWWWWWWWWWWXXXXo . .",
+"  .  . oXXXWWWWWWWWWWXXXXXo . . ",
+" .  .  .ooXXXXWWWWXXXXXXXoo.  . ",
+".  .  .  .ooooXXXXXXXoooo .  . .",
+"  .  .  .  .  ooooooo  .  .  . ",
+" .  .  .  .  .  .  .  .  .  .  ",
+".  .  .  .  .  .  .  .  .  .  .",
+"  .  .  .  .  .  .  .  .  .  . ",
+" .  .  .  .  .  .  .  .  .  .  ",
+".  .  .  .  .  .  .  .  .  .  ."
+};

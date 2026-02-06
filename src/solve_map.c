@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   solve_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 22:52:17 by blamotte          #+#    #+#             */
-/*   Updated: 2026/01/27 11:20:56 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/02/05 22:06:07 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ int	count_special_char(char *out, t_map_content *map)
 			map->data_positions[i] = count++;
 		if (out[i] == COLECTIBLE_CHAR)
 		{
-			byte_index = (map->data_positions[i]) / 64;
-			bit_index = (map->data_positions[i]) % 64;
+			byte_index = (map->data_positions[i] - 1) / 64;
+			bit_index = (map->data_positions[i] - 1) % 64;
 			map->exit_mask[byte_index] |= (1ULL << bit_index);
 		}
 		i++;
@@ -87,10 +87,10 @@ int	parsing_map(char *out, t_map_content *map)
 	if (!map->data_positions)
 		return (0);
 	map->initial_position = find_char_index(out, INITIAL_CHAR);
-	if (find_char_index(out, INITIAL_CHAR + map->initial_position + 1) || 
-		find_char_index(out, EXIT_CHAR + map->exit_position + 1))
-		return (0);
 	map->exit_position = find_char_index(out, EXIT_CHAR);
+	if (find_char_index(out + map->initial_position + 1, INITIAL_CHAR) || 
+		find_char_index(out + map->exit_position + 1, EXIT_CHAR))
+		return (0);
 	if (!(map->initial_position) || (!map->exit_position) || (!is_map_valid(out, map)))
 		return (0);
 	ft_bzero(map->exit_mask, sizeof(map->exit_mask));
@@ -126,8 +126,10 @@ char	*get_map(int ac, char **av, t_map_content *map)
 	fd = open(av[ac - 1], O_RDONLY);
 	line = get_next_line(fd);
 	map->width = ft_strlen(line);
+	map->height = 0;
 	while (line)
 	{
+		map->height++;
 		tmp = out;
 		if (out)
 			out = ft_strjoin(tmp, line);
@@ -174,37 +176,35 @@ int	initialize_all(t_queue *q, t_bst *tree, t_map_content *map)
 	q->rear	= first_qnode;
 	return (1);
 }
-void	free_palestine(t_bst *tree, t_map_content *map, char **adjacency, int nb_state)
+void	free_palestine(t_bst *tree, char **adjacency, int nb_state)
 {
 	free_adjacency_matrice(adjacency, nb_state);
 	free_bst(tree->left);
 	free_bst(tree->right);
 	free_state(tree->state);
-	free(map->map);
-	free(map->data_positions);
 }
 
-int main (int ac, char **av)
+int is_solvable(int ac, char **av, t_map_content *map)
 {
-	t_map_content	map;
 	int				nb_state;
 	t_queue			q;
 	t_bst			tree;
 	char			**adjacency;
 	
-	if (ac > 2 || ac < 2)
+	adjacency = NULL;
+	if (ac == 2)
+		map->map = get_map(ac, av, map);
+	if (!map->map)
 		return (0);
-	map.map = get_map(ac, av, &map);
-	if (!map.map)
+	if (!initialize_all(&q, &tree, map))
 		return (0);
-	if (!initialize_all(&q, &tree, &map))
+	nb_state = bfs(&q, &tree, map);
+	printf("%d", nb_state);
+	if (nb_state < 2)
 		return (0);
-	nb_state = bfs(&q, &tree, &map);
-	if (!nb_state)
-		return (0);
-	adjacency = make_adjacency_matrice(&tree, nb_state);
-	if (adjacency)
-		print_adjacency_matrice(adjacency, nb_state);
-	free_palestine(&tree, &map, adjacency, nb_state);
-	return (0);
+	//adjacency = make_adjacency_matrice(&tree, nb_state);
+	// if (adjacency)
+	// 	print_adjacency_matrice(adjacency, nb_state);
+	free_palestine(&tree, adjacency, nb_state);
+	return (nb_state);
 }
