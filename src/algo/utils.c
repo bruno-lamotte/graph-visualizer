@@ -6,7 +6,7 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 00:00:00 by blamotte          #+#    #+#             */
-/*   Updated: 2026/02/08 18:28:42 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/02/09 00:23:43 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,14 @@ int	check_extension(char *filename)
 
 void	free_palestine(t_bst *tree, char **adjacency, int nb_state)
 {
-	free_adjacency_matrice(adjacency, nb_state);
-	free_bst(tree->left);
-	free_bst(tree->right);
-	free_state(tree->state);
+	if (adjacency)
+		free_adjacency_matrice(adjacency, nb_state);
+	if (tree->left)
+		free_bst(tree->left);
+	if (tree->right)
+		free_bst(tree->right);
+	if (tree->state)
+		free_state(tree->state);
 }
 
 long long	get_timestamp(void)

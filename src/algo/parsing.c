@@ -6,7 +6,7 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 00:00:00 by blamotte          #+#    #+#             */
-/*   Updated: 2026/02/06 03:44:29 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/02/09 00:34:42 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,14 @@ int	parsing_map(char *out, t_map_content *map)
 	map->initial_position = find_char_index(out, INITIAL_CHAR);
 	map->exit_position = find_char_index(out, EXIT_CHAR);
 	if (find_char_index(out + map->initial_position + 1, INITIAL_CHAR)
-		|| find_char_index(out + map->exit_position + 1, EXIT_CHAR))
-		return (0);
+		|| find_char_index(out + map->exit_position + 1, EXIT_CHAR)
+		||!find_char_index(out, COLECTIBLE_CHAR))
+		return (free(map->data_positions), 0);
 	if (!(map->initial_position) || (!map->exit_position) || (!is_map_valid(out,
 				map)))
-		return (0);
+		return (free(map->data_positions), 0);
 	ft_bzero(map->exit_mask, sizeof(map->exit_mask));
 	if (count_special_char(out, map) >= 256)
-		return (0);
+		return (free(map->data_positions), 0);
 	return (1);
 }

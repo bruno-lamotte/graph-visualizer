@@ -6,7 +6,7 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 22:52:17 by blamotte          #+#    #+#             */
-/*   Updated: 2026/02/06 11:10:33 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/02/09 00:38:50 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ char	*get_map(int ac, char **av, t_map_content *map)
 	while (line)
 	{
 		if (!get_line(&out, line, map))
-			return (NULL);
+			return (get_next_line(-1), NULL);
 		line = get_next_line(fd);
 	}
 	if (line)
 		free(line);
 	if (!parsing_map(out, map))
-		return (free(out), close(fd), NULL);
+		return (get_next_line(-1), free(out), close(fd), NULL);
 	return (close(fd), out);
 }
 
