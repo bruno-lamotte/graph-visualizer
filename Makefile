@@ -2,7 +2,7 @@
 #                                 CONFIG                                       #
 # **************************************************************************** #
 
-NAME        = solong
+NAME        = so_long
 CC          = cc
 CFLAGS      = -Wall -Wextra -Werror -g3 -O3 -MMD -MP
 
@@ -11,6 +11,8 @@ CFLAGS      = -Wall -Wextra -Werror -g3 -O3 -MMD -MP
 # **************************************************************************** #
 
 SRC_DIR     = src
+ALGO_DIR    = $(SRC_DIR)/algo
+DISP_DIR    = $(SRC_DIR)/display
 OBJ_DIR     = obj
 INC_DIR     = inc
 LIBFT_DIR   = libft
@@ -20,8 +22,7 @@ MLX_DIR     = minilibx-linux
 #                                 SOURCES                                      #
 # **************************************************************************** #
 
-SRC_FILES   = display.c \
-			  action.c \
+ALGO_FILES  = action.c \
 			  bfs.c \
 			  bst.c \
 			  graph_process.c \
@@ -29,11 +30,29 @@ SRC_FILES   = display.c \
 			  move.c \
 			  parsing.c \
 			  solve_map.c \
-			  utils.c  
+			  utils.c
 
-SRCS        = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
+DISP_FILES  = display.c \
+			  animation_loop_utils.c \
+			  break_anim.c \
+			  coin_anim.c \
+			  exit_anim.c \
+			  free_textures.c \
+			  hole_anim.c \
+			  init_textures.c \
+			  initialization.c \
+			  keypress.c \
+			  render_game.c \
+			  render_tiles.c \
+			  rendering_utils.c \
+			  verif_actions_on_path.c
 
-OBJS        = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
+ALGO_SRCS   = $(addprefix $(ALGO_DIR)/, $(ALGO_FILES))
+DISP_SRCS   = $(addprefix $(DISP_DIR)/, $(DISP_FILES))
+SRCS        = $(ALGO_SRCS) $(DISP_SRCS)
+
+OBJS        = $(patsubst $(ALGO_DIR)/%.c, $(OBJ_DIR)/algo/%.o, $(ALGO_SRCS)) \
+			  $(patsubst $(DISP_DIR)/%.c, $(OBJ_DIR)/display/%.o, $(DISP_SRCS))
 DEPS        = $(OBJS:.o=.d)
 
 # **************************************************************************** #
@@ -58,8 +77,12 @@ $(NAME): $(LIBFT) $(MLX) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBS_FLAGS) -o $(NAME)
 	@echo "✅ $(NAME) compiled successfully!"
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(OBJ_DIR)
+$(OBJ_DIR)/algo/%.o: $(ALGO_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)/algo
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(OBJ_DIR)/display/%.o: $(DISP_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)/display
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(LIBFT):

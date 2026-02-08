@@ -6,7 +6,7 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 00:00:00 by blamotte          #+#    #+#             */
-/*   Updated: 2026/02/06 03:31:55 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/02/08 18:28:42 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,12 @@ void	free_palestine(t_bst *tree, char **adjacency, int nb_state)
 	free_bst(tree->left);
 	free_bst(tree->right);
 	free_state(tree->state);
+}
+
+long long	get_timestamp(void)
+{
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }

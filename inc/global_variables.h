@@ -6,7 +6,7 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 23:08:29 by blamotte          #+#    #+#             */
-/*   Updated: 2026/02/06 04:45:51 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/02/08 15:13:11 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,10 +127,6 @@
 
 # ifndef X_EVENT_DESTROY
 #  define X_EVENT_DESTROY 17
-# endif
-
-# ifndef X_MASK_KEY_PRESS
-#  define X_MASK_KEY_PRESS (1L << 0)
 # endif
 
 #endif
