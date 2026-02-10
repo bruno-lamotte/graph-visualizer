@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initialization.c                                   :+:      :+:    :+:   */
+/*   initi_vars.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 18:32:02 by blamotte          #+#    #+#             */
-/*   Updated: 2026/02/08 18:59:11 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/02/10 12:49:06 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,23 @@ void	init_vars_anims(t_vars *vars)
 
 void	init_player_state(t_vars *vars)
 {
-	vars->current_state = new_state();
+	if (!vars->current_state)
+		vars->current_state = new_state();
 	if (!vars->current_state)
 		close_program(vars);
-	vars->current_state->x = vars->map.initial_position % vars->map.width;
-	vars->current_state->y = vars->map.initial_position / vars->map.width;
+	if (vars->map.width > 0)
+	{
+		vars->current_state->x = vars->map.initial_position % vars->map.width;
+		vars->current_state->y = vars->map.initial_position / vars->map.width;
+	}
+	else
+	{
+		vars->current_state->x = 0;
+		vars->current_state->y = 0;
+	}
+	vars->current_state->state_index = 0;
 	vars->current_state->parent = NULL;
+	vars->current_state->adjacencies = NULL;
 }
 
 void	init_vars_textures(t_vars *vars)
@@ -83,33 +94,5 @@ void	init_vars(t_vars *vars)
 	vars->hole_anim.total_frames = 8;
 	init_vars_textures(vars);
 	init_vars_anims(vars);
-}
-
-void	initialize_textures(t_vars *vars)
-{
-	void	*mlx;
-	int		w;
-	int		h;
-
-	(1 && (w = 32), (h = 32));
-	mlx = vars->mlx;
-	vars->textures.wall = mlx_xpm_file_to_image(mlx, "./textures/wall.xpm", &w,
-			&h);
-	vars->textures.floor = mlx_xpm_file_to_image(mlx, "./textures/floor.xpm",
-			&w, &h);
-	vars->textures.player = mlx_xpm_file_to_image(mlx,
-			"./textures/playerdown1.xpm", &w, &h);
-	vars->textures.collectible = mlx_xpm_file_to_image(mlx,
-			"./textures/coin.xpm", &w, &h);
-	vars->textures.exit = mlx_xpm_file_to_image(mlx, "./textures/exit.xpm", &w,
-			&h);
-	vars->textures.fragile_floor = mlx_xpm_file_to_image(mlx,
-			"./textures/breackable.xpm", &w, &h);
-	vars->textures.hole = mlx_xpm_file_to_image(mlx, "./textures/hole.xpm", &w,
-			&h);
-	init_player_textures(vars, mlx, &w, &h);
-	init_coin_textures(vars, mlx, &w, &h);
-	init_exit_textures(vars, mlx, &w, &h);
-	init_break_textures(vars, mlx, &w, &h);
-	init_hole_textures(vars, mlx, &w, &h);
+	init_player_state(vars);
 }

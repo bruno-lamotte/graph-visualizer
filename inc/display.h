@@ -6,7 +6,7 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 11:31:32 by blamotte          #+#    #+#             */
-/*   Updated: 2026/02/08 19:04:52 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/02/10 12:56:25 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ typedef struct s_vars
 /* display.c */
 int					close_program(t_vars *vars);
 int					animation_loop(t_vars *vars);
+void				print_move_count_on_screen(t_vars *vars, int nb_moves);
 
 /* animation_loop_utils.c */
 void				get_anim_position(t_vars *vars, int *px_x, int *px_y);
@@ -161,6 +162,12 @@ void				init_player_state(t_vars *vars);
 
 /* init_textures.c */
 void				init_player_textures(t_vars *vars, void *mlx, int *w,
+						int *h);
+void				init_player_textures_down(t_vars *vars, void *mlx, int *w,
+						int *h);
+void				init_player_textures_left(t_vars *vars, void *mlx, int *w,
+						int *h);
+void				init_player_textures_right(t_vars *vars, void *mlx, int *w,
 						int *h);
 void				init_coin_textures(t_vars *vars, void *mlx, int *w, int *h);
 void				init_exit_textures(t_vars *vars, void *mlx, int *w, int *h);

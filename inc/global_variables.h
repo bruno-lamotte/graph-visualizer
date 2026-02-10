@@ -6,7 +6,7 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 23:08:29 by blamotte          #+#    #+#             */
-/*   Updated: 2026/02/08 15:13:11 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/02/10 14:43:26 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@
 
 # ifndef TILE_SIZE
 #  define TILE_SIZE 32
+# endif
+
+# ifndef BOTTOM_BAR_SIZE
+#  define BOTTOM_BAR_SIZE 20
 # endif
 
 /*limits*/
@@ -127,6 +131,40 @@
 
 # ifndef X_EVENT_DESTROY
 #  define X_EVENT_DESTROY 17
+# endif
+
+/*error messages*/
+
+# ifndef MAP_NOT_RECTANGULAR_ERROR
+#  define MAP_NOT_RECTANGULAR_ERROR 1
+# endif
+
+# ifndef MAP_NOT_SURROUNDED_ERROR
+#  define MAP_NOT_SURROUNDED_ERROR 2
+# endif
+
+# ifndef EXIT_PLAYER_COLLECTIBLE_ERROR
+#  define EXIT_PLAYER_COLLECTIBLE_ERROR 3
+# endif
+
+# ifndef INVALID_CHAR_ERROR
+#  define INVALID_CHAR_ERROR 4
+# endif
+
+# ifndef MAP_NOT_SOLVABLE_ERROR
+#  define MAP_NOT_SOLVABLE_ERROR 5
+# endif
+
+# ifndef WRONG_ARGUMENT_NUMBER_ERROR
+#  define WRONG_ARGUMENT_NUMBER_ERROR 6
+# endif
+
+# ifndef MAP_DO_NOT_EXIST_ERROR
+#  define MAP_DO_NOT_EXIST_ERROR 7
+# endif
+
+# ifndef TOO_MUCH_DATA_ERROR
+#  define TOO_MUCH_DATA_ERROR 8
 # endif
 
 #endif

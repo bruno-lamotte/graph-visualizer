@@ -6,7 +6,7 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 04:05:37 by blamotte          #+#    #+#             */
-/*   Updated: 2026/02/06 03:42:09 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/02/10 14:08:10 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_map_content
 	int				*data_positions;
 	int				initial_position;
 	int				exit_position;
+	int				min_moves;
 	uint64_t		exit_mask[MAX_DATA_CHUNKS];
 }					t_map_content;
 

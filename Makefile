@@ -4,7 +4,7 @@
 
 NAME        = so_long
 CC          = cc
-CFLAGS      = -Wall -Wextra -Werror -g3 -O3 -MMD -MP
+CFLAGS      = -Wall -Wextra -Werror -g3 -MMD -MP
 
 # **************************************************************************** #
 #                                 CHEMINS                                      #
@@ -40,7 +40,9 @@ DISP_FILES  = display.c \
 			  free_textures.c \
 			  hole_anim.c \
 			  init_textures.c \
-			  initialization.c \
+			  init_textures_anims.c \
+			  init_textures_player.c \
+			  initi_vars.c \
 			  keypress.c \
 			  render_game.c \
 			  render_tiles.c \

@@ -6,7 +6,7 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 18:32:02 by blamotte          #+#    #+#             */
-/*   Updated: 2026/02/08 18:36:57 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/02/10 13:35:10 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	get_anim_position(t_vars *vars, int *px_x, int *px_y)
 void	finish_animation(t_vars *vars)
 {
 	vars->anim.is_animating = 0;
+	vars->anim.frame = 0;
 	free_state(vars->current_state);
 	vars->current_state = vars->next_state;
 	vars->next_state = NULL;

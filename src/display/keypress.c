@@ -6,7 +6,7 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 18:32:02 by blamotte          #+#    #+#             */
-/*   Updated: 2026/02/08 18:36:57 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/02/10 13:09:39 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	init_next_frames(t_vars *vars, t_state *next_state, int move_dir)
 	int	dist_y;
 
 	vars->next_state = next_state;
+	vars->next_state->state_index = vars->current_state->state_index + 1;
 	vars->anim.direction = move_dir;
 	vars->anim.start_x = vars->current_state->x;
 	vars->anim.start_y = vars->current_state->y;

@@ -6,7 +6,7 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 00:00:00 by blamotte          #+#    #+#             */
-/*   Updated: 2026/02/06 03:31:16 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/02/10 14:33:40 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_state	*new_state(void)
 	new->y = 0;
 	ft_bzero(new->block_data, sizeof(new->block_data));
 	new->adjacencies = NULL;
+	new->parent = NULL;
 	return (new);
 }
 
@@ -46,5 +47,6 @@ t_state	*create_futur_state(t_state *actual, int x, int y)
 	ft_memcpy(futur->block_data, actual->block_data, sizeof(futur->block_data));
 	futur->x = x;
 	futur->y = y;
+	futur->parent = actual;
 	return (futur);
 }

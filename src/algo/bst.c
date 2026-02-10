@@ -6,7 +6,7 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 06:43:46 by blamotte          #+#    #+#             */
-/*   Updated: 2026/02/06 03:12:51 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/02/10 13:59:37 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,14 @@ void	free_bst(t_bst *tree)
 	free(tree);
 }
 
-void	bst_insert(t_bst *tree, t_state *new)
+int	bst_insert(t_bst *tree, t_state *new)
 {
 	t_bst	*new_node;
 	int		direction;
 
 	new_node = malloc(sizeof(t_bst));
 	if (!new_node)
-		return ;
+		return (0);
 	new_node->state = new;
 	(1 && (new_node->left = NULL), (new_node->right = NULL));
 	while (tree)
@@ -67,14 +67,15 @@ void	bst_insert(t_bst *tree, t_state *new)
 		if (direction > 0)
 		{
 			if (!tree->left)
-				return ((void)(tree->left = new_node));
+				return ((tree->left = new_node), 1);
 			tree = tree->left;
 		}
 		else
 		{
 			if (!tree->right)
-				return ((void)(tree->right = new_node));
+				return ((tree->right = new_node), 1);
 			tree = tree->right;
 		}
 	}
+	return (0);
 }

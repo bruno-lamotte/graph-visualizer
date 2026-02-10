@@ -6,25 +6,25 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 20:52:29 by blamotte          #+#    #+#             */
-/*   Updated: 2026/02/06 03:52:31 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/02/10 14:37:41 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GRAPH_H
 # define GRAPH_H
 
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <fcntl.h>
-# include <libft.h>
-# include <struct.h>
-# include <stdint.h>
-# include <global_variables.h>
+# include "display.h"
 # include "mlx.h"
 # include "mlx_int.h"
-# include "display.h"
+# include <fcntl.h>
+# include <global_variables.h>
+# include <libft.h>
+# include <stdint.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <struct.h>
 # include <sys/time.h>
+# include <unistd.h>
 
 /* action.c */
 int		is_exit(t_state *current, t_map_content *map);
@@ -40,7 +40,7 @@ int		bfs(t_queue *q, t_bst *tree, t_map_content *map);
 int		compare_states(t_state *a, t_state *b);
 t_state	*bst_search(t_bst *tree, t_state *futur);
 void	free_bst(t_bst *tree);
-void	bst_insert(t_bst *tree, t_state *new);
+int		bst_insert(t_bst *tree, t_state *new);
 
 /* graph_process.c */
 void	complete_adjacency_matrice(t_bst *tree, char ***adj);
@@ -68,6 +68,8 @@ int		parsing_map(char *out, t_map_content *map);
 /* utils.c */
 int		check_extension(char *filename);
 void	free_palestine(t_bst *tree, char **adjacency, int nb_state);
+void	print_error(int error_type);
+int		get_min_possible_moves(t_state *last_state);
 
 /* solve_map.c */
 int		is_solvable(int ac, char **av, t_map_content *map, int is_test);

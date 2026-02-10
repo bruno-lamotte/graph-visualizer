@@ -6,7 +6,7 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 18:32:02 by blamotte          #+#    #+#             */
-/*   Updated: 2026/02/08 20:27:30 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/02/10 15:16:22 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	render_game_anim(t_vars *vars, int player_px_x, int player_px_y)
 {
 	render_tiles_with_player(vars, player_px_x, player_px_y);
 	render_anims_and_player(vars, player_px_x, player_px_y);
+	print_move_count_on_screen(vars, vars->current_state->state_index);
 }
 
 void	render_tiles_with_player(t_vars *vars, int player_px_x, int player_px_y)

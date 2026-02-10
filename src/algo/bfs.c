@@ -6,7 +6,7 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 07:53:04 by blamotte          #+#    #+#             */
-/*   Updated: 2026/02/06 04:07:17 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/02/10 14:32:06 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ int	process_futur(t_state *actual, t_state *futur, t_bfs_var *var)
 	{
 		futur->state_index = (*var->counter)++;
 		add_adjacency(actual, futur);
-		bst_insert(var->tree, futur);
+		if (!bst_insert(var->tree, futur))
+			return (0);
 		if (!add_to_queue(var->q, futur))
 			return (0);
 	}
@@ -103,7 +104,8 @@ int	bfs(t_queue *q, t_bst *tree, t_map_content *map)
 	{
 		actual = get_from_queue(q);
 		if (is_exit(actual, map))
-			return (free_queue(q), state_counter);
+			return (map->min_moves = get_min_possible_moves(actual),
+				free_queue(q), state_counter);
 		if (is_hole(actual, map))
 			continue ;
 		i = 0;

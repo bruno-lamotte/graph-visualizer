@@ -6,7 +6,7 @@
 /*   By: blamotte <blamotte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 22:52:17 by blamotte          #+#    #+#             */
-/*   Updated: 2026/02/09 00:38:50 by blamotte         ###   ########.fr       */
+/*   Updated: 2026/02/10 11:33:23 by blamotte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	get_line(char **out, char *line, t_map_content *map)
 	if (tmp)
 		free(tmp);
 	if ((int)ft_strlen(line) != map->width)
-		return (0);
+		return (print_error(MAP_NOT_RECTANGULAR_ERROR), 0);
 	if (!*out)
 		return (0);
 	free(line);
@@ -42,19 +42,21 @@ char	*get_map(int ac, char **av, t_map_content *map)
 	if (!check_extension(av[ac - 1]))
 		return (NULL);
 	fd = open(av[ac - 1], O_RDONLY);
+	if (fd == -1)
+		return (NULL);
 	line = get_next_line(fd);
 	map->width = ft_strlen(line);
 	map->height = 0;
 	while (line)
 	{
 		if (!get_line(&out, line, map))
-			return (get_next_line(-1), NULL);
+			return (get_next_line(-1), free(line), free(out), close(fd), NULL);
 		line = get_next_line(fd);
 	}
 	if (line)
 		free(line);
 	if (!parsing_map(out, map))
-		return (get_next_line(-1), free(out), close(fd), NULL);
+		return (get_next_line(-1), close(fd), NULL);
 	return (close(fd), out);
 }
 
@@ -64,8 +66,10 @@ int	initialize_all(t_queue *q, t_bst *tree, t_map_content *map)
 	t_qnode	*first_qnode;
 
 	first_state = new_state();
+	if (!first_state)
+		return (0);
 	first_qnode = malloc(sizeof(t_qnode));
-	if (!first_state || !first_qnode)
+	if (!first_qnode)
 		return (0);
 	first_state->y = map->initial_position / map->width;
 	first_state->x = map->initial_position % map->width;
@@ -88,18 +92,22 @@ int	is_solvable(int ac, char **av, t_map_content *map, int is_test)
 
 	adjacency = NULL;
 	if (ac == 2)
+	{
 		map->map = get_map(ac, av, map);
-	if (!map->map)
-		return (0);
-	if (!initialize_all(&q, &tree, map))
-		return (0);
-	nb_state = bfs(&q, &tree, map);
-	if (!nb_state)
-		return (free_palestine(&tree, adjacency, nb_state), 0);
-	if (is_test)
-		adjacency = make_adjacency_matrice(&tree, nb_state);
-	if (adjacency)
-		print_adjacency_matrice(adjacency, nb_state);
-	free_palestine(&tree, adjacency, nb_state);
-	return (nb_state);
+		if (!map->map)
+			return (0);
+		if (!initialize_all(&q, &tree, map))
+			return (free_palestine(&tree, adjacency, 0), 0);
+		nb_state = bfs(&q, &tree, map);
+		if (!nb_state)
+			return (print_error(MAP_NOT_SOLVABLE_ERROR),
+				free_palestine(&tree, adjacency, nb_state), 0);
+		if (is_test)
+			adjacency = make_adjacency_matrice(&tree, nb_state);
+		if (adjacency)
+			print_adjacency_matrice(adjacency, nb_state);
+		free_palestine(&tree, adjacency, nb_state);
+		return (nb_state);
+	}
+	return (print_error(WRONG_ARGUMENT_NUMBER_ERROR), 0);
 }
